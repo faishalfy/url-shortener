@@ -69,7 +69,7 @@ def shorten_url():
     # Cache the mapping for fast redirects later
     cache.set(short_code, long_url)
 
-    return jsonify({"short_url": f"http://localhost:5000/{short_code}", "short_code": short_code}), 201
+    return jsonify({"short_url": f"http://localhost:5001/{short_code}", "short_code": short_code}), 201
 
 @app.route("/<short_code>")
 def redirect_url(short_code):
@@ -97,3 +97,6 @@ def redirect_url(short_code):
     cache.set(short_code, long_url)
 
     return redirect(long_url, code=302)
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
