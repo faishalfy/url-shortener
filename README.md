@@ -35,6 +35,10 @@ curl -X POST http://localhost:5001/shorten \
 
 The response includes a `short_url` and `short_code`. Open the `short_url` in a browser to follow the redirect.
 
+## Rate limit
+
+Each client IP can make up to 10 requests to `/shorten`. Each accepted request refreshes a 60-second Redis counter. Once the limit is reached, further requests return HTTP `429` with `{"error":"Rate limit exceeded. Try again later."}` until the counter expires. Requests from the same IP share the limit, and invalid requests count too.
+
 Check running services and stop them with:
 
 ```bash
